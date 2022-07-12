@@ -1,19 +1,13 @@
 require "application_system_test_case"
 
 class QuotesTest < ApplicationSystemTestCase
-  test "Creating a new quote" do
-    visits quotes_path
-    assert_selector "h1", text: "Quotes"
-
-    click on "New quote"
-    assert_selector "h1", text: "New quote"
-
-    fill_in "Name", with: "Capybara quote"
-    click_on "Create quote"
-
-    assert_selector "h1", text: "Quotes"
-    assert_text "Capybara quote"
+  setup do
+    @quote = quotes(:first) # Reference to the first fixture quote
   end
+
+  # ...
+  # The test we just wrote
+  # ...
 
   test "Showing a quote" do
     visit quotes_path
@@ -26,7 +20,7 @@ class QuotesTest < ApplicationSystemTestCase
     visit quotes_path
     assert_selector "h1", text: "Quotes"
 
-    click_on "Edit" match: :first
+    click_on "Edit", match: :first
     assert_selector "h1", text: "Edit quote"
 
     fill_in "Name", with: "Updated quote"
@@ -34,4 +28,13 @@ class QuotesTest < ApplicationSystemTestCase
 
     assert_selector "h1", text: "Quotes"
     assert_text "Updated quote"
+  end
+
+  test "Destroying a quote" do
+    visit quotes_path
+    assert_text @quote.name
+
+    click_on "Delete", match: :first
+    assert_no_text @quote.name
+  end
 end
