@@ -2,7 +2,7 @@ require "test_helper"
 
 class QuoteTest < ActiveSupport::TestCase
   test "valid" do
-    quote = Quote.new(name: 'a quote')
+    quote = Quote.new(name: 'a quote', company: companies(:kpmg))
     assert quote.valid?
   end
 
